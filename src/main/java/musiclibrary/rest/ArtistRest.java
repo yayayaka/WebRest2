@@ -58,4 +58,11 @@ public class ArtistRest {
         view.add(artist);
         return artist;
     }
+
+    @GET
+    @Path("/del/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void delArtist(@PathParam("id") String id) {
+        view.remove(Integer.parseInt(id));
+    }
 }

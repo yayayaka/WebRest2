@@ -25,18 +25,21 @@
                 var artistTable = document.getElementById("artistTable");
                 var tableHeader = document.createElement("th");
                 tableHeader.setAttribute("class", "th");
-                tableHeader.setAttribute("colspan", 2);
+                tableHeader.setAttribute("colspan", 3);
                 tableHeader.innerHTML = "<h4>Artists</h4>";
                 artistTable.appendChild(tableHeader);
                 var tr = document.createElement("tr");
                 var idTd = document.createElement("td");
                 var nameTd = document.createElement("td");
+                var emptyTd = document.createElement("td");
                 idTd.innerText = "Id";
                 idTd.setAttribute("class", "th");
                 nameTd.innerText = "Name";
                 nameTd.setAttribute("class", "th");
+                emptyTd.setAttribute("class", "th");
                 tr.appendChild(idTd);
                 tr.appendChild(nameTd);
+                tr.appendChild(emptyTd);
                 artistTable.appendChild(tr);
                 var addForm = document.createElement("form");
                 addForm.setAttribute("name", "addForm");
@@ -44,8 +47,10 @@
                 addForm.setAttribute("method", "post");
                 addForm.setAttribute("accept-charset", "utf-8");
                 var trAdd = document.createElement("tr");
+                var tdAddEmpty = document.createElement("td");
                 var tdAddName = document.createElement("td");
                 var tdAddInput = document.createElement("td");
+                tdAddEmpty.setAttribute("class", "td");
                 tdAddName.setAttribute("class", "td");
                 tdAddInput.setAttribute("class", "td");
                 var nameInput = document.createElement("input");
@@ -62,6 +67,7 @@
                 addButton.setAttribute("onclick", "addClick()");
                 tdAddName.appendChild(nameInput);
                 tdAddInput.appendChild(addButton);
+                trAdd.appendChild(tdAddEmpty);
                 trAdd.appendChild(tdAddName);
                 trAdd.appendChild(tdAddInput);
                 trAdd.appendChild(addForm);
@@ -74,8 +80,13 @@
                     nextName.setAttribute("class", "td");
                     nextId.innerText = artists.Artist[pointer].id;
                     nextName.innerText = artists.Artist[pointer].name;
+                    var delArtTd = document.createElement("td");
+                    delArtTd.setAttribute("class", "td");
+                    delArtTd.innerHTML = "<form name='delForm" + artists.Artist[pointer].id + "'>" +
+                        "<input class='button' type='submit' value='Delete' onclick='delClick(" + artists.Artist[pointer].id + ")'></form>";
                     nextTr.appendChild(nextId);
                     nextTr.appendChild(nextName);
+                    nextTr.appendChild(delArtTd);
                     artistTable.appendChild(nextTr);
                 }
             }
@@ -84,20 +95,21 @@
 
         function addClick() {
             var artistName = document.getElementById('name').value;
-            if (name == 'name' || name == '') {
+            if (artistName === 'name' || artistName === '') {
                 alert('Input the name');
             } else {
-                var name = {
-                    id : -1,
-                    name : artistName
-                };
-                var jsonName = JSON.stringify(name);
                 posthttp = new XMLHttpRequest();
                 posthttp.open("GET", "http://localhost:8080/rest/artists/add/" + artistName, true);
-                // posthttp.setRequestHeader('Content-Type', 'application/json');
-                posthttp.send(null);//(jsonName);
+                posthttp.send(null);
             }
         }
+
+    function delClick(id) {
+            posthttp = new XMLHttpRequest();
+            posthttp.open("GET", "http://localhost:8080/rest/artists/del/" + id, true);
+            posthttp.send(null);
+    }
+
     // function addClick() {
     //     var artistName = document.getElementById('name').value;
     //     if (name == 'name' || name == '') {
