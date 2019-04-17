@@ -30,20 +30,32 @@ public class ArtistRest {
         List<Artist> artists = view.getAll();
         String jsonString = "";
         jsonString = JSONparser.getJSONstring(artists);
-//        for (int pointer = 0; pointer < artists.size(); pointer++) {
-//
-//            if (pointer + 1 != artists.size()) {
-//                gsonString += ", ";
-//            }
-//        }
-//        gsonString += "]";
         return "{\"" + Artist.class.getSimpleName() + "\":" + jsonString + "}";//"{ \"id\" : 1, \"name\" : \"my_name\" }";
     }
 
-    @POST
+//    @POST
+//    @Path("/add")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response putArtist(Artist artist) {
+//        String output = artist.toString();
+//        return Response.status(200).entity(output).build();
+//    }
+
+//    @POST
+//    @Path("/add")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Artist putArtist(Response response) {
+//        Artist artist = (Artist)response.getEntity();
+//        view.add(artist);
+//        return artist;
+//    }
+
+    @GET
+    @Path("/add/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
-//    @Path("{name}")
-    public void putArtist(Response response) {
-        response.getEntity();
+    public Artist putArtist(@PathParam("name") String name) {
+        Artist artist = new Artist(-1, name);
+        view.add(artist);
+        return artist;
     }
 }

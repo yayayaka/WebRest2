@@ -93,11 +93,27 @@
                 };
                 var jsonName = JSON.stringify(name);
                 posthttp = new XMLHttpRequest();
-                posthttp.open("POST", "http://localhost:8080/artists/", true);
-                posthttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                posthttp.send(jsonName);
+                posthttp.open("GET", "http://localhost:8080/rest/artists/add/" + artistName, true);
+                // posthttp.setRequestHeader('Content-Type', 'application/json');
+                posthttp.send(null);//(jsonName);
             }
         }
+    // function addClick() {
+    //     var artistName = document.getElementById('name').value;
+    //     if (name == 'name' || name == '') {
+    //         alert('Input the name');
+    //     } else {
+    //         var name = {
+    //             id : -1,
+    //             name : artistName
+    //         };
+    //         var jsonName = JSON.stringify(name);
+    //         posthttp = new XMLHttpRequest();
+    //         posthttp.open("POST", "http://localhost:8080/rest/artists/add/", true);
+    //         posthttp.setRequestHeader('Content-Type', 'application/json');
+    //         posthttp.send(jsonName);
+    //     }
+    // }
 </script>
 
 </body>
